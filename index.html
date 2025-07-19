@@ -358,6 +358,10 @@
             font-family: 'Times New Roman', serif;
             font-size: 14px;
         }
+        
+        .popup.print * {
+            font-family: 'Times New Roman', serif;
+        }
 
         /* Print prescription styles - LAYOUT CỐ ĐỊNH RESPONSIVE */
         .medicine-item {
@@ -557,18 +561,56 @@
         }
         
         .patient-info {
+            margin-bottom: 15px;
+        }
+        
+        .patient-row {
             display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            min-height: 24px;
+        }
+        
+        .patient-row-1 {
             justify-content: space-between;
-            margin-bottom: 10px;
         }
         
-        .patient-left {
+        .patient-row-2 {
+            justify-content: space-between;
+        }
+        
+        .patient-row-3 {
+            justify-content: flex-start;
+        }
+        
+        .field-left {
+            display: flex;
+            align-items: center;
             flex: 1;
         }
         
-        .patient-right {
+        .field-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex: 1;
-            text-align: right;
+        }
+        
+        .field-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+        }
+        
+        .field-label {
+            font-weight: bold;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        
+        .field-value {
+            min-width: 80px;
         }
         
         .footer-note {
@@ -880,15 +922,40 @@
             <h3 style="text-align: center; text-decoration: underline;">ĐƠN THUỐC</h3>
             
             <div class="patient-info">
-                <div class="patient-left">
-                    <p><strong>Họ tên:</strong> <span id="print-name" style="display: inline-block; min-width: 200px;"></span></p>
-                    <p><strong>Địa chỉ:</strong> <span id="print-address" style="display: inline-block; min-width: 300px;"></span></p>
-                    <p><strong>Chẩn đoán:</strong> <span id="print-diagnosis" style="display: inline-block; min-width: 300px;"></span></p>
+                <!-- Dòng 1: Họ tên (trái) - Tuổi (phải) - Cân nặng (phải) -->
+                <div class="patient-row patient-row-1">
+                    <div class="field-left">
+                        <span class="field-label">Họ tên:</span>
+                    </div>
+                    <div class="field-center">
+                        <span id="print-name" class="field-value"></span>
+                    </div>
+                    <div class="field-right">
+                        <span class="field-label">Tuổi:</span>
+                        <span id="print-age" class="field-value"></span>
+                        <span class="field-label" style="margin-left: 20px;">Cân nặng:</span>
+                        <span id="print-weight" class="field-value"></span>
+                    </div>
                 </div>
-                <div class="patient-right">
-                    <p><strong>Tuổi:</strong> <span id="print-age" style="display: inline-block; min-width: 100px;"></span></p>
-                    <p><strong>Giới tính:</strong> <span id="print-gender" style="display: inline-block; min-width: 100px;"></span></p>
-                    <p><strong>Cân nặng:</strong> <span id="print-weight" style="display: inline-block; min-width: 100px;"></span></p>
+                
+                <!-- Dòng 2: Địa chỉ (trái) - Giới tính (phải) -->
+                <div class="patient-row patient-row-2">
+                    <div class="field-left">
+                        <span class="field-label">Địa chỉ:</span>
+                        <span id="print-address" class="field-value"></span>
+                    </div>
+                    <div class="field-right">
+                        <span class="field-label">Giới tính:</span>
+                        <span id="print-gender" class="field-value"></span>
+                    </div>
+                </div>
+                
+                <!-- Dòng 3: Chẩn đoán -->
+                <div class="patient-row patient-row-3">
+                    <div class="field-left">
+                        <span class="field-label">Chẩn đoán:</span>
+                        <span id="print-diagnosis" class="field-value"></span>
+                    </div>
                 </div>
             </div>
             
