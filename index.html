@@ -1371,7 +1371,7 @@ function createEmptyDetailPrescriptionItem() {
         });
     }
 
-    // SỬA LỖI: Hàm parsePrescriptionText được cải thiện
+    // SỬA LỖI: Hàm parsePrescriptionText được cải thiện - có xử lý đơn vị
     function parsePrescriptionText(prescriptionText) {
         if (!prescriptionText || prescriptionText.trim() === '') {
             return [];
@@ -1395,6 +1395,7 @@ function createEmptyDetailPrescriptionItem() {
                     name: parts[0] || '',
                     quantity: '',
                     unit: 'Viên', // default unit
+                    quantityWithUnit: '', // Số lượng + đơn vị
                     dosage: '',
                     morning: '0',
                     evening: '0'
@@ -1410,6 +1411,9 @@ function createEmptyDetailPrescriptionItem() {
                         prescription.quantity = slWords[0];
                         if (slWords.length > 1) {
                             prescription.unit = slWords.slice(1).join(' ');
+                            prescription.quantityWithUnit = `${prescription.quantity} ${prescription.unit}`;
+                        } else {
+                            prescription.quantityWithUnit = `${prescription.quantity} Viên`;
                         }
                     } else if (part.includes('Sáng:') || part.includes('Chiều:')) {
                         // Handle timing information
@@ -1431,6 +1435,11 @@ function createEmptyDetailPrescriptionItem() {
                     }
                 }
                 
+                // Nếu không có SL: thì để trống quantityWithUnit
+                if (!prescription.quantityWithUnit && prescription.quantity) {
+                    prescription.quantityWithUnit = `${prescription.quantity} ${prescription.unit}`;
+                }
+                
                 prescriptions.push(prescription);
             }
         });
@@ -1450,6 +1459,7 @@ function createEmptyDetailPrescriptionItem() {
                 name: '',
                 quantity: '',
                 unit: '',
+                quantityWithUnit: '',
                 dosage: '',
                 morning: '',
                 evening: ''
@@ -1469,7 +1479,7 @@ function createEmptyDetailPrescriptionItem() {
                 <div class="medicine-name-container">
                     <span class="medicine-name">${item.name || ''}</span>
                     <span class="quantity-label">Số lượng:</span>
-                    <span class="medicine-quantity">${item.quantity || ''}</span>
+                    <span class="medicine-quantity">${item.quantityWithUnit || item.quantity || ''}</span>
                 </div>
             `;
             
