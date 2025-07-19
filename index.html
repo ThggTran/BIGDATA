@@ -359,28 +359,26 @@
             font-size: 14px;
         }
 
-        /* Print prescription styles - SỬA LỖI Ở ĐÂY */
+        /* Print prescription styles - LAYOUT CỐ ĐỊNH */
         .medicine-item {
-            margin-bottom: 15px;
-            padding: 8px 0;
-            border-bottom: 1px dotted #000;
+            margin-bottom: 20px;
+            padding: 0;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
         .medicine-line-1 {
             display: flex;
             align-items: baseline;
-            gap: 8px;
-            margin-bottom: 5px;
-            font-size: 14px;
-            line-height: 1.4;
+            margin-bottom: 8px;
+            min-height: 24px;
         }
 
         .medicine-line-2 {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 13px;
             margin-left: 25px;
+            display: flex;
+            align-items: baseline;
+            min-height: 24px;
         }
 
         .medicine-number {
@@ -389,43 +387,75 @@
             flex-shrink: 0;
         }
 
-        .medicine-name {
-            font-weight: bold;
+        .medicine-name-container {
+            display: flex;
+            align-items: baseline;
             flex: 1;
-            min-width: 0;
+            gap: 20px;
+        }
+
+        .medicine-name {
+            border-bottom: 1px dotted #000;
+            min-width: 200px;
+            padding: 0 5px 2px 5px;
+            flex: 1;
+        }
+
+        .quantity-label {
+            white-space: nowrap;
+            font-weight: normal;
         }
 
         .medicine-quantity {
-            min-width: 30px;
+            border-bottom: 1px dotted #000;
+            min-width: 40px;
+            padding: 0 5px 2px 5px;
             text-align: center;
+            display: inline-block;
         }
 
-        .medicine-unit {
-            min-width: 30px;
-        }
-
-        .medicine-dosage {
-            flex: 1;
-            font-style: italic;
-        }
-
-        .dosage-item {
+        .dosage-container {
             display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
+            align-items: baseline;
+            gap: 20px;
+            flex: 1;
         }
 
         .dosage-label {
-            font-size: 12px;
-            color: #666;
-            min-width: 35px;
+            white-space: nowrap;
+            font-weight: normal;
         }
 
-        .dosage-value {
-            font-weight: bold;
-            min-width: 20px;
+        .medicine-dosage {
+            border-bottom: 1px dotted #000;
+            min-width: 150px;
+            padding: 0 5px 2px 5px;
+            flex: 1;
+        }
+
+        .timing-container {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+        }
+
+        .timing-group {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+        }
+
+        .timing-label {
+            white-space: nowrap;
+            font-weight: normal;
+        }
+
+        .timing-value {
+            border-bottom: 1px dotted #000;
+            min-width: 30px;
+            padding: 0 5px 2px 5px;
             text-align: center;
+            display: inline-block;
         }
 
         /* Print prescription styles */
@@ -1413,68 +1443,64 @@ function createEmptyDetailPrescriptionItem() {
         return prescriptions;
     }
     
-    // SỬA LỖI: Hàm createPrescriptionLayout được sửa lại hoàn toàn
+    // LAYOUT CỐ ĐỊNH: Hàm createPrescriptionLayout tạo bố cục giống form
     function createPrescriptionLayout(prescriptions) {
         const container = document.getElementById('print-prescription-container');
         container.innerHTML = '';
         
         if (!prescriptions || prescriptions.length === 0) {
-            container.innerHTML = '<p style="font-style: italic; color: #666;">Không có chỉ định thuốc</p>';
-            return;
+            // Tạo một mục trống với layout cố định
+            prescriptions = [{
+                number: '1',
+                name: '',
+                quantity: '',
+                unit: '',
+                dosage: '',
+                morning: '',
+                evening: ''
+            }];
         }
         
         prescriptions.forEach(item => {
             const medicineItem = document.createElement('div');
             medicineItem.className = 'medicine-item';
             
-            // Line 1: Number + Medicine Name + Quantity + Unit
+            // Line 1: Number + Medicine Name + Quantity
             const line1 = document.createElement('div');
             line1.className = 'medicine-line-1';
             
-            // Tạo text content cho dòng 1
-            let line1Content = `${item.number}. ${item.name}`;
-            if (item.quantity) {
-                line1Content += ` - SL: ${item.quantity}`;
-                if (item.unit && item.unit !== 'Viên') {
-                    line1Content += ` ${item.unit}`;
-                } else {
-                    line1Content += ' Viên';
-                }
-            }
+            line1.innerHTML = `
+                <span class="medicine-number">${item.number}.</span>
+                <div class="medicine-name-container">
+                    <span class="medicine-name">${item.name || ''}</span>
+                    <span class="quantity-label">Số lượng:</span>
+                    <span class="medicine-quantity">${item.quantity || ''}</span>
+                </div>
+            `;
             
-            line1.innerHTML = `<span style="font-weight: bold;">${line1Content}</span>`;
-            
-            // Line 2: Dosage + Morning + Evening (if any)
+            // Line 2: Dosage + Morning + Evening 
             const line2 = document.createElement('div');
             line2.className = 'medicine-line-2';
             
-            let line2Content = '';
-            if (item.dosage) {
-                line2Content += `<span style="font-style: italic;">${item.dosage}</span>`;
-            }
+            line2.innerHTML = `
+                <div class="dosage-container">
+                    <span class="dosage-label">Liều:</span>
+                    <span class="medicine-dosage">${item.dosage || ''}</span>
+                </div>
+                <div class="timing-container">
+                    <div class="timing-group">
+                        <span class="timing-label">Sáng:</span>
+                        <span class="timing-value">${item.morning || ''}</span>
+                    </div>
+                    <div class="timing-group">
+                        <span class="timing-label">Chiều:</span>
+                        <span class="timing-value">${item.evening || ''}</span>
+                    </div>
+                </div>
+            `;
             
-            // Add timing if available
-            const timingParts = [];
-            if (item.morning && item.morning !== '0') {
-                timingParts.push(`Sáng: ${item.morning}`);
-            }
-            if (item.evening && item.evening !== '0') {
-                timingParts.push(`Chiều: ${item.evening}`);
-            }
-            
-            if (timingParts.length > 0) {
-                if (line2Content) line2Content += ' - ';
-                line2Content += timingParts.join(', ');
-            }
-            
-            if (line2Content) {
-                line2.innerHTML = line2Content;
-                medicineItem.appendChild(line1);
-                medicineItem.appendChild(line2);
-            } else {
-                medicineItem.appendChild(line1);
-            }
-            
+            medicineItem.appendChild(line1);
+            medicineItem.appendChild(line2);
             container.appendChild(medicineItem);
         });
     }
