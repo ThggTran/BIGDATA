@@ -359,9 +359,9 @@
             font-size: 14px;
         }
 
-        /* Print prescription styles - LAYOUT CỐ ĐỊNH KHÔNG CÓ ĐƯỜNG CHẤM */
+        /* Print prescription styles - LAYOUT CỐ ĐỊNH RESPONSIVE */
         .medicine-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding: 0;
             font-size: 14px;
             line-height: 1.6;
@@ -369,7 +369,7 @@
 
         .medicine-line-1 {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             margin-bottom: 8px;
             min-height: 24px;
         }
@@ -377,81 +377,119 @@
         .medicine-line-2 {
             margin-left: 25px;
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             min-height: 24px;
+            flex-wrap: wrap;
         }
 
         .medicine-number {
             font-weight: bold;
             min-width: 20px;
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
         .medicine-name-container {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             flex: 1;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .medicine-name {
-            min-width: 200px;
+            min-width: 0;
             padding: 0 5px 2px 5px;
             flex: 1;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            min-width: 150px;
+        }
+
+        .quantity-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .quantity-label {
             white-space: nowrap;
             font-weight: normal;
+            flex-shrink: 0;
         }
 
         .medicine-quantity {
             min-width: 40px;
             padding: 0 5px 2px 5px;
-            text-align: center;
-            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .dosage-container {
             display: flex;
-            align-items: baseline;
-            gap: 20px;
+            align-items: flex-start;
+            gap: 15px;
             flex: 1;
+            min-width: 0;
+        }
+
+        .dosage-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 5px;
+            flex: 1;
+            min-width: 0;
         }
 
         .dosage-label {
             white-space: nowrap;
             font-weight: normal;
+            flex-shrink: 0;
         }
 
         .medicine-dosage {
-            min-width: 150px;
+            min-width: 0;
             padding: 0 5px 2px 5px;
             flex: 1;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .timing-container {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             gap: 15px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
         }
 
         .timing-group {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             gap: 5px;
+            white-space: nowrap;
         }
 
         .timing-label {
             white-space: nowrap;
             font-weight: normal;
+            flex-shrink: 0;
         }
 
         .timing-value {
             min-width: 30px;
             padding: 0 5px 2px 5px;
             text-align: center;
-            display: inline-block;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Print prescription styles */
@@ -1478,8 +1516,10 @@ function createEmptyDetailPrescriptionItem() {
                 <span class="medicine-number">${item.number}.</span>
                 <div class="medicine-name-container">
                     <span class="medicine-name">${item.name || ''}</span>
-                    <span class="quantity-label">Số lượng:</span>
-                    <span class="medicine-quantity">${item.quantityWithUnit || item.quantity || ''}</span>
+                    <div class="quantity-section">
+                        <span class="quantity-label">Số lượng:</span>
+                        <span class="medicine-quantity">${item.quantityWithUnit || item.quantity || ''}</span>
+                    </div>
                 </div>
             `;
             
@@ -1489,17 +1529,19 @@ function createEmptyDetailPrescriptionItem() {
             
             line2.innerHTML = `
                 <div class="dosage-container">
-                    <span class="dosage-label">Liều:</span>
-                    <span class="medicine-dosage">${item.dosage || ''}</span>
-                </div>
-                <div class="timing-container">
-                    <div class="timing-group">
-                        <span class="timing-label">Sáng:</span>
-                        <span class="timing-value">${item.morning || ''}</span>
+                    <div class="dosage-section">
+                        <span class="dosage-label">Liều:</span>
+                        <span class="medicine-dosage">${item.dosage || ''}</span>
                     </div>
-                    <div class="timing-group">
-                        <span class="timing-label">Chiều:</span>
-                        <span class="timing-value">${item.evening || ''}</span>
+                    <div class="timing-container">
+                        <div class="timing-group">
+                            <span class="timing-label">Sáng:</span>
+                            <span class="timing-value">${item.morning || ''}</span>
+                        </div>
+                        <div class="timing-group">
+                            <span class="timing-label">Chiều:</span>
+                            <span class="timing-value">${item.evening || ''}</span>
+                        </div>
                     </div>
                 </div>
             `;
