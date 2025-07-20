@@ -353,10 +353,12 @@
         }
 
         .popup.print {
-            width: 74mm;
+            width: 148mm;
             height: 210mm;
             font-family: 'Times New Roman', serif;
-            font-size: 12px;
+            font-size: 16px;
+            padding: 15mm;
+            box-sizing: border-box;
         }
         
         .popup.print * {
@@ -365,24 +367,24 @@
 
         /* Print prescription styles - LAYOUT CỐ ĐỊNH RESPONSIVE */
         .medicine-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding: 0;
-            font-size: 12px;
-            line-height: 1.5;
+            font-size: 16px;
+            line-height: 1.6;
         }
 
         .medicine-line-1 {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 8px;
-            min-height: 24px;
+            margin-bottom: 10px;
+            min-height: 28px;
         }
 
         .medicine-line-2 {
-            margin-left: 25px;
+            margin-left: 30px;
             display: flex;
             align-items: flex-start;
-            min-height: 24px;
+            min-height: 28px;
             flex-wrap: wrap;
         }
 
@@ -397,7 +399,7 @@
             display: flex;
             align-items: flex-start;
             flex: 1;
-            gap: 8px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
@@ -437,7 +439,7 @@
         .dosage-container {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 15px;
             flex: 1;
             min-width: 0;
         }
@@ -469,7 +471,7 @@
         .timing-container {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 15px;
             flex-shrink: 0;
             flex-wrap: wrap;
         }
@@ -527,12 +529,14 @@
                 top: 0;
                 left: 0;
                 transform: none;
-                width: 95mm;
+                width: 148mm;
+                height: 210mm;
                 margin: 0 auto;
-                padding: 5mm;
+                padding: 15mm;
                 max-height: none;
                 overflow: visible;
                 border: none;
+                box-sizing: border-box;
             }
             .print-btn {
                 display: none;
@@ -567,8 +571,8 @@
         .patient-row {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            min-height: 24px;
+            margin-bottom: 12px;
+            min-height: 30px;
         }
         
         .patient-row-1 {
@@ -605,22 +609,22 @@
         
         .field-label {
             font-weight: bold;
-            margin-right: 5px;
+            margin-right: 8px;
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 16px;
         }
         
         .field-value {
-            min-width: 40px;
-            font-size: 12px;
+            min-width: 60px;
+            font-size: 16px;
         }
         
         .footer-note {
-            margin-top: 20px;
-            font-size: 12px;
+            margin-top: 25px;
+            font-size: 14px;
             font-style: italic;
             border-top: 1px solid #ddd;
-            padding-top: 10px;
+            padding-top: 15px;
         }
     </style>
 
@@ -933,7 +937,7 @@
                     <div class="field-right">
                         <span class="field-label">Tuổi:</span>
                         <span id="print-age" class="field-value"></span>
-                                                 <span class="field-label" style="margin-left: 10px;">Cân nặng:</span>
+                                                 <span class="field-label" style="margin-left: 15px;">Cân nặng:</span>
                         <span id="print-weight" class="field-value"></span>
                     </div>
                 </div>
@@ -959,7 +963,7 @@
                 </div>
             </div>
             
-            <p><strong>Chỉ định:</strong></p>
+            <p><strong>Thuốc điều trị:</strong></p>
             
             <div class="prescription-container" id="print-prescription-container">
                 <!-- Prescription items will be added here -->
@@ -967,13 +971,13 @@
             
             <div class="footer-note">
                 <strong>Lời dặn bác sĩ:</strong><br>
-                Dặn uỷ gia đình kỹ cho bệnh nhân về đơn thuốc và đơn tư vấn, bệnh nhân đi đúng y sư dùng
+                Đã tư vấn kỹ cho bệnh nhân về đơn thuốc và đơn tư vấn, bệnh nhân đã đồng ý sử dụng.
             </div>
             
-            <div style="margin-top: 30px; text-align: right;">
+            <div style="margin-top: 35px; margin-right: 40px; text-align: right;">
                 <div id="print-date-line" style="display: inline-block; text-align: right;">
-                    Ngày <span id="print-day">...</span> tháng <span id="print-month">...</span> năm <span id="print-year">...</span><br>
-                    <div style="text-align: center; width: 100%;">
+                    Nghệ An, Ngày <span id="print-day">...</span> tháng <span id="print-month">...</span> năm <span id="print-year">...</span><br>
+                    <div style="text-align: center; width: 100%; margin-top: 10px;">
                         <strong>BS Khám bệnh</strong>
                     </div>
                 </div>
